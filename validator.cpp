@@ -8,10 +8,13 @@ Validator::Validator(Board *board)
 
 int Validator::getInput()
 {
+  fflush(stdin);
   double input{};
   bool valid{false};
+
   while (valid == false)
   {
+    fflush(stdin);
     std::cin >> input;
 
     // std::cout << "Row: " << (input - 1) / 3 << "\nColumn: " << (input - 1) % 3 << std::endl;
@@ -21,12 +24,13 @@ int Validator::getInput()
       std::cin.clear();
       std::cin.ignore(1000000000000000000, '\n');
       std::cout << "Invalid input, please enter a number 1-9: ";
+      continue;
     }
     else if(input != (int) input)
     {
       std::cout << "Invalid input, please enter a non-decimal number 1-9: ";
     }
-    else if (input > 9 || input < 0)
+    else if (input > 9 || input < 1)
     {
       std::cout << "The number you enterd is outside the range of 1-9\n";
     }
@@ -39,6 +43,7 @@ int Validator::getInput()
     {
       valid = true;
     }
+    fflush(stdin);
     std::cin.clear();
   }
   // std::cout << "Row: " << (input - 1) / 3 << "\nColumn: " << (input - 1) % 3 << std::endl;
@@ -47,6 +52,7 @@ int Validator::getInput()
 
 bool Validator::getReplay()
 {
+  fflush(stdin);
   bool valid{false};
   char playAgain{false};
 
