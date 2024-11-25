@@ -1,17 +1,20 @@
-#include "swarm.hpp"
-#include <cctype>
+#include "base_player.hpp"
 #include <iostream>
 
-Swarm::Swarm(Board *board)
+
+basePlayer::basePlayer(Board *board, char mark)
 {
-  this->board = board;
+    this->board = board;
+    this->mark = mark;
 }
 
-int Swarm::getInput()
+
+int basePlayer::getInput()
 {
   fflush(stdin);
   std::string input{};
-  // bool valid{false};
+
+  std::cout << "Please select what square you would like to play: ";
 
   while (true)
   {
@@ -26,17 +29,9 @@ int Swarm::getInput()
       std::cin.ignore(1000000000000000000, '\n');
       std::cout << "Invalid input, please enter a number 1-9: ";
     }
-    else if (input[0] == 'a' && input.length() == 1)
+    else if (isalpha(input[0]))
     {
-      std::cout << "using an ability" << std::endl;
-    }
-    else if (input[0] == 'a' && input.length() > 1)
-    {
-      std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
-    }
-    else if (input[0] != 'a' && isalpha(input[0]))
-    {
-      std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
+        std::cout << "Invalid input, please enter a number 1-9: ";
     }
     else if (stod(input) != stoi(input))
     {
@@ -62,12 +57,12 @@ int Swarm::getInput()
   return stoi(input);
 }
 
-void Swarm::test()
+void basePlayer::test()
 {
-  std::cout << "test succeeded!" << std::endl;
+    std::cout << "test succesful!" << std::endl;
 }
 
-char Swarm::getMark()
+char basePlayer::getMark()
 {
-  return mark;
+    return mark;
 }

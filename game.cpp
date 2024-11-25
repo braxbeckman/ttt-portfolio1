@@ -1,11 +1,36 @@
 #include "game.hpp"
 #include "swarm.hpp"
+#include "base_player.hpp"
 #include <iostream>
 #include <string>
 
 void Game::playTTT()
 {
-    std::cout << "TTT Game Started!" << std::endl;
+  bool gameOver{false};
+
+  while (!gameOver)
+  {
+    std::cout << console->displayBoard() << std::endl;
+    std::cout << playerOne->getMark() << "! Your turn! ";
+    board->takeTurn(playerOne->getInput(), playerOne->getMark());
+    if (gameState->checkStatus() == WON)
+    {
+      std::cout << gameState->getWinner() << " has won!" << std::endl;
+      break;
+    }
+
+
+    std::cout << console->displayBoard() << std::endl;
+    std::cout << playerTwo->getMark() << "! Your turn! ";
+    board->takeTurn(playerTwo->getInput(), playerTwo->getMark());
+    if (gameState->checkStatus() == WON)
+    {
+      std::cout << gameState->getWinner() << " has won!" << std::endl;
+      break;
+    }
+    std::cout << console->displayBoard() << std::endl;
+    
+  }
 }
 
 void Game::playBattle()
@@ -83,9 +108,18 @@ bool Game::getReplay()
   return false;
 }
 
-  Game::Game(Console *console, Board *board, GameState *gameState)
-  {
-    this->console = console;
-    this->board = board;
-    this-> gameState = gameState;
-  }
+Game::Game(Console *console, Board *board, GameState *gameState)
+{
+  this->console = console;
+  this->board = board;
+  this-> gameState = gameState;
+}
+
+Game::Game(Console *console, Board *board, GameState *gameState, Player *playerOne, Player *playerTwo)
+{
+  this->console = console;
+  this->board = board;
+  this-> gameState = gameState;
+  this->playerOne = playerOne;
+  this->playerTwo = playerTwo;
+}

@@ -12,4 +12,5 @@ protected:
 public:
   virtual int getInput() = 0;
   virtual void test() = 0;
+  virtual char getMark() = 0;
 };

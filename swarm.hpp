@@ -9,6 +9,8 @@ private:
 
 public:
   Swarm(Board *board);
-  int getInput();
-  void test();
+  int getInput() override;
+  void test() override;
+  char getMark() override;
+
 };

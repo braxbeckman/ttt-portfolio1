@@ -7,6 +7,7 @@ enum state
   STOPPED,
   PLAYING,
   WON,
+  TIE,
 };
 
 class GameState

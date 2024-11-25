@@ -15,6 +15,8 @@ private:
 
 public:
   Game(Console *console, Board *board, GameState *gameState);
+  Game(Console *console, Board *board, GameState *gameState, Player *playerOne, Player *playerTwo);
+
   void setPlayerOne(Player *player);
   void setPlayerTwo(Player *player);
   Player *selectClass();
