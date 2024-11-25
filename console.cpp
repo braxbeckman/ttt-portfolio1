@@ -7,6 +7,7 @@ Console::Console(Board *board)
 {
   this->board = board;
 }
+
 string Console::displayBoard()
 {
   string output{};

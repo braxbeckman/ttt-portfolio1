@@ -1,59 +1,48 @@
 #include "board.hpp"
 #include "console.hpp"
 #include "game_state.hpp"
-#include "validator.hpp"
+#include "player.hpp"
+#include "swarm.hpp"
+#include "game.hpp"
 #include <cstdlib>
 #include <iostream>
 
-bool replay{true};
-int player{};
-bool intro{true};
-
 int main()
 {
-  while (replay == true)
+  Board *board = new Board;
+  Console console(board);
+  GameState gameState(board);
+  Swarm swarm(board);
+
+
+  int gameChoice{};
+  std::cout << "Welcome to TTT! First question - would you like to play Normal TTT (1) or Battle TTT (2)? ";
+  while (true)
   {
-    Board *board = new Board;
-    Console console(board);
-    GameState gameState(board);
-    Validator validator(board);
-    replay = false;
-    int counter{0};
-    char symbol{'X'};
-
-    while (gameState.checkStatus() == "playing")
+    std::cin >> gameChoice;
+    if (gameChoice > 2 || gameChoice < 1)
     {
-      if (counter == 9)
-      {
-        break;
-      }
-
-      counter % 2 ? symbol = 'O' : symbol = 'X';
-      counter % 2 ? player = 2 : player = 1;
-
-      std::cout << "\033[2J\033[1;1H" << (intro ? "Welcome to TTT!\n" : "") << console.displayBoard();
-      intro = false;
-
-      std::cout << "Player " << player << ", where would you like to move? (1-9) ";
-      int move{validator.getInput()};
-      board->takeTurn(move, symbol);
-
-      counter++;
+      std::cout << "Please enter a valid choice ";
     }
-    if (counter == 9)
+    else
     {
-      std::cout << "It's a draw!\n Would you like to play again? (Y to continue, any other key to quit) ";
-      replay = validator.getReplay();
-      continue;
+      break;
     }
-
-
-      std::cout << console.displayBoard();
-      std::cout << "The game is over, " << gameState.getWinner() << " won!\n";
-
-      std::cout << "Would you like to play again? (Y to continue, any other key to quit) ";
-      replay = validator.getReplay();
   }
 
-  std::cout << "Thank you for playing! Come again!" << std::endl;
+
+  if (gameChoice == 1)
+  {
+    Game TTT(&console, board, &gameState);
+    TTT.playTTT();
+  }
+  else if (gameChoice == 2)
+  {
+    Game battle(&console, board, &gameState);
+    battle.setPlayerOne(battle.selectClass());
+    battle.setPlayerTwo(battle.selectClass());
+
+    battle.playBattle();
+  }
 }
+

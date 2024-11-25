@@ -15,3 +15,16 @@ char Board::getMark(int row, int column)
 {
   return cells[row][column];
 }
+
+void Board::clearBoard()
+{
+  int counter{1};
+  for (int i = 0; i < 3; i++)
+  {
+    for (int k = 0; k < 3; k++)
+    {
+      cells[i][k] = to_string(counter).c_str()[0];
+      counter++;
+    }
+  }
+}
