@@ -40,10 +40,32 @@ enum state GameState::checkStatus()
     return WON;
   }
 
-  else
   {
-    return PLAYING;
+    int charCheck{48};
+    int counter{0};
+    for (int i = 0; i < 3; i++)
+    {
+      for (int k = 0; k < 3; k++)
+      {
+        charCheck++;
+        counter++;
+        if (counter == 9)
+        {
+          return TIE;
+        }
+        else if (board->getMark(i, k) == char (charCheck))
+        {
+          return PLAYING;
+        }
+        else 
+        {
+          continue;
+        }
+      }
+    }
   }
+
+  return PLAYING;
 }
 
 char GameState::getWinner()

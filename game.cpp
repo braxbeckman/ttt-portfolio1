@@ -18,6 +18,11 @@ void Game::playTTT()
       std::cout << gameState->getWinner() << " has won!" << std::endl;
       break;
     }
+    if (gameState->checkStatus() == TIE)
+    {
+      std::cout << "Game ended in a tie!" << std::endl;
+      break;
+    }
 
 
     std::cout << console->displayBoard() << std::endl;
