@@ -5,7 +5,6 @@
 class Player
 {
 private:
-  char mark{};
   std::string archetype{};
 
 protected:

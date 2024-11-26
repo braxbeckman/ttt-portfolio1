@@ -22,26 +22,26 @@ int main()
   Board *board = new Board;
   Console console(board);
   GameState gameState(board);
-    int gameChoice{};
-    std::cout << "Welcome to TTT! First question - would you like to play Normal TTT (1) or Battle TTT (2)? ";
-    while (true)
+  int gameChoice{};
+  std::cout << "\033[2J" << "Welcome to TTT! First question - would you like to play Normal TTT (1) or Battle TTT (2)? ";
+  while (true)
+  {
+    std::cin >> gameChoice;
+    if (std::cin.fail())
     {
-      std::cin >> gameChoice;
-      if (std::cin.fail())
-      {
-        std::cin.ignore(1000000, '\n');
-        std::cin.clear();
-        std::cout << "Please enter a valid choice ";
-      }
-      if (gameChoice > 2 || gameChoice < 1)
-      {
-        std::cout << "Please enter a valid choice ";
-      }
-      else
-      {
-        break;
-      }
+      std::cin.ignore(1000000, '\n');
+      std::cin.clear();
+      std::cout << "Please enter a valid choice ";
     }
+    if (gameChoice > 2 || gameChoice < 1)
+    {
+      std::cout << "Please enter a valid choice ";
+    }
+    else
+    {
+      break;
+    }
+  }
 
 
     if (gameChoice == 1)

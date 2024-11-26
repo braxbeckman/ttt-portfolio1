@@ -12,6 +12,7 @@ int Swarm::getInput()
 {
   fflush(stdin);
   std::string input{};
+  std::cout << "Please enter 1-9 to place a mark!";
   // bool valid{false};
 
   while (true)

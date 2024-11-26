@@ -94,15 +94,12 @@ void Game::setPlayerTwo(Player *player)
 Player *Game::selectClass()
 {
 std::string choice{};
-std::cout << "Would you like to play \"The Swarm\" (1) or \"The Pyromancer\" (2)?" << std::endl;
-std::cout << "\nThe Swarm - Overwhelm your foes with as-of-yet unseen battle tactics (win if your mark is in all 4 corners)" << std::endl;
-std::cout << "\nThe Pyromancer - Tap into the weave and unleash a destructive force even you are not safe from (has an ability that can be used to wipe the board once per game)" << std::endl;
+std::cout << "\033[2J" << "Would you like to play \"The Swarm\" or \"The Pyromancer\"?";
+std::cout << "\n(1) The Swarm - Overwhelm your foes with as-of-yet unseen battle tactics (win if your mark is in all 4 corners)" << std::endl;
+std::cout << "\n(2) The Pyromancer - Tap into the weave and unleash a destructive force even you are not safe from (has an ability that can be used to wipe the board once per game)" << std::endl;
 
 while (true)
 {
-    std::cin.clear();
-    std::cin.ignore(1000000000, '\n');
-    
     fflush(stdin);
     getline(std::cin, choice);
     fflush(stdin);
@@ -116,7 +113,7 @@ while (true)
     }
     else 
     {
-      std::cout << "success!";
+      // std::cout << "success!";
       if (choice[0] == '1')
       {
         Swarm *tmpPlayer = new Swarm(board, 'X');
@@ -127,7 +124,7 @@ while (true)
         Pyromancer *tmpPlayer = new Pyromancer(board, 'O');
         return tmpPlayer;
       }
-      std::cout << "fail(?)!" << std::endl;
+      // std::cout << "fail(?)!" << std::endl;
     }
 }
 }
