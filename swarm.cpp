@@ -2,9 +2,10 @@
 #include <cctype>
 #include <iostream>
 
-Swarm::Swarm(Board *board)
+Swarm::Swarm(Board *board, char mark)
 {
   this->board = board;
+  this->mark = mark;
 }
 
 int Swarm::getInput()
@@ -26,18 +27,18 @@ int Swarm::getInput()
       std::cin.ignore(1000000000000000000, '\n');
       std::cout << "Invalid input, please enter a number 1-9: ";
     }
-    else if (input[0] == 'a' && input.length() == 1)
-    {
-      std::cout << "using an ability" << std::endl;
-    }
-    else if (input[0] == 'a' && input.length() > 1)
-    {
-      std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
-    }
-    else if (input[0] != 'a' && isalpha(input[0]))
-    {
-      std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
-    }
+    // else if (input[0] == 'a' && input.length() == 1)
+    // {
+    //   std::cout << "using an ability" << std::endl;
+    // }
+    // else if (input[0] == 'a' && input.length() > 1)
+    // {
+    //   std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
+    // }
+    // else if (input[0] != 'a' && isalpha(input[0]))
+    // {
+    //   std::cout << "Please enter either \'a\' or a number 1-9" << std::endl;
+    // }
     else if (stod(input) != stoi(input))
     {
       std::cout << "Invalid input, please enter a non-decimal number 1-9: ";
@@ -70,4 +71,9 @@ void Swarm::test()
 char Swarm::getMark()
 {
   return mark;
+}
+
+std::string Swarm::getArchetype()
+{
+    return archetype;
 }

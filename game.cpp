@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "swarm.hpp"
+#include "pyromancer.hpp"
 #include "base_player.hpp"
 #include <iostream>
 #include <string>
@@ -7,19 +8,21 @@
 void Game::playTTT()
 {
   bool gameOver{false};
+  std::cout << console->displayBoard() << std::endl;
 
   while (!gameOver)
   {
-    std::cout << console->displayBoard() << std::endl;
     std::cout << playerOne->getMark() << "! Your turn! ";
     board->takeTurn(playerOne->getInput(), playerOne->getMark());
     if (gameState->checkStatus() == WON)
     {
+      std::cout << console->displayBoard() << std::endl;
       std::cout << gameState->getWinner() << " has won!" << std::endl;
       break;
     }
     if (gameState->checkStatus() == TIE)
     {
+      std::cout << console->displayBoard() << std::endl;
       std::cout << "Game ended in a tie!" << std::endl;
       break;
     }
@@ -34,14 +37,50 @@ void Game::playTTT()
       break;
     }
     std::cout << console->displayBoard() << std::endl;
-    
   }
 }
 
 void Game::playBattle()
 {
-    std::cout << "Battle TTT Game started!" << std::endl;
+  bool gameOver{false};
+  std::cout << console->displayBoard() << std::endl;
+
+  while (!gameOver)
+  {
+    std::cout << playerOne->getMark() << "! Your turn! ";
+    board->takeTurn(playerOne->getInput(), playerOne->getMark());
+    if (gameState->checkStatus(playerOne) == WON)
+    {
+      std::cout << console->displayBoard() << std::endl;
+      std::cout << gameState->getWinner() << " has won!" << std::endl;
+      break;
+    }
+    if (gameState->checkStatus(playerOne) == TIE)
+    {
+      std::cout << console->displayBoard() << std::endl;
+      std::cout << "Game ended in a tie!" << std::endl;
+      break;
+    }
+
+
+    std::cout << console->displayBoard() << std::endl;
+    std::cout << playerTwo->getMark() << "! Your turn! ";
+    board->takeTurn(playerTwo->getInput(), playerTwo->getMark());
+    if (gameState->checkStatus(playerTwo) == WON)
+    {
+      std::cout << gameState->getWinner() << " has won!" << std::endl;
+      break;
+    }
+    if (gameState->checkStatus(playerTwo) == TIE)
+    {
+      std::cout << console->displayBoard() << std::endl;
+      std::cout << "Game ended in a tie!" << std::endl;
+      break;
+    }
+    std::cout << console->displayBoard() << std::endl;
+  }
 }
+
 
 void Game::setPlayerOne(Player *player)
 {
@@ -55,7 +94,9 @@ void Game::setPlayerTwo(Player *player)
 Player *Game::selectClass()
 {
 std::string choice{};
-std::cout << "Would you like to play \"The Swarm\" (1) or \"The Pyromancer\" (2)? ";
+std::cout << "Would you like to play \"The Swarm\" (1) or \"The Pyromancer\" (2)?" << std::endl;
+std::cout << "\nThe Swarm - Overwhelm your foes with as-of-yet unseen battle tactics (win if your mark is in all 4 corners)" << std::endl;
+std::cout << "\nThe Pyromancer - Tap into the weave and unleash a destructive force even you are not safe from (has an ability that can be used to wipe the board once per game)" << std::endl;
 
 while (true)
 {
@@ -64,6 +105,7 @@ while (true)
     
     fflush(stdin);
     getline(std::cin, choice);
+    fflush(stdin);
     if (choice.length() > 1)
     {
         std::cout << "Please enter 1 or 2: ";
@@ -74,13 +116,18 @@ while (true)
     }
     else 
     {
-        std::cout << "success!";
-        if (choice[0] == '1')
-        {
-            Swarm *player = new Swarm(board);
-            return player;
-        }
-        std::cout << "fail(?)!" << std::endl;
+      std::cout << "success!";
+      if (choice[0] == '1')
+      {
+        Swarm *tmpPlayer = new Swarm(board, 'X');
+        return tmpPlayer;
+      }
+      if (choice[0] == '2')
+      {
+        Pyromancer *tmpPlayer = new Pyromancer(board, 'O');
+        return tmpPlayer;
+      }
+      std::cout << "fail(?)!" << std::endl;
     }
 }
 }

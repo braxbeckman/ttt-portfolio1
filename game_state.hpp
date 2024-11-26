@@ -1,5 +1,6 @@
 #pragma once
 #include "board.hpp"
+#include "player.hpp"
 #include <string>
 
 enum state
@@ -20,6 +21,7 @@ private:
 
 public:
   GameState(Board *board);
+  enum state checkStatus(Player *player);
   enum state checkStatus();
   void setStatus(std::string in);
   char getWinner();

@@ -8,13 +8,14 @@
 #include <cstdlib>
 #include <iostream>
 
+bool getReplay();
+
 int main()
 {
 
   // Swarm swarm(board);
   bool replay{true};
 
-bool getReplay();
 
   while(replay)
   {

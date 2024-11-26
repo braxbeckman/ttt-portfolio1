@@ -66,3 +66,8 @@ char basePlayer::getMark()
 {
     return mark;
 }
+
+std::string basePlayer::getArchetype()
+{
+    return archetype;
+}
