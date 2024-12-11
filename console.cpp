@@ -7,9 +7,11 @@ Console::Console(Board *board)
 {
   this->board = board;
 }
+
 string Console::displayBoard()
 {
   string output{};
+  output += "\033[2J";
   output += emptySpacer;
   output += board->getMark(0, 0);
   output += vertSeparator;

@@ -1,59 +1,99 @@
+#include "base_player.hpp"
 #include "board.hpp"
 #include "console.hpp"
+#include "game.hpp"
 #include "game_state.hpp"
-#include "validator.hpp"
+#include "player.hpp"
+#include "swarm.hpp"
+#include "stat_tracker.hpp"
 #include <cstdlib>
 #include <iostream>
 
-bool replay{true};
-int player{};
-bool intro{true};
+bool getReplay();
+
+StatTracker tracker;
 
 int main()
 {
-  while (replay == true)
+
+  // Swarm swarm(board);
+  bool replay{true};
+
+  while (replay)
   {
     Board *board = new Board;
     Console console(board);
     GameState gameState(board);
-    Validator validator(board);
-    replay = false;
-    int counter{0};
-    char symbol{'X'};
-
-    while (gameState.checkStatus() == "playing")
+    int gameChoice{};
+    std::cout << "\033[2J"
+              << "Welcome to TTT! First question - would you like to play Normal TTT (1) or Battle TTT (2)? ";
+    while (true)
     {
-      if (counter == 9)
+      std::cin >> gameChoice;
+      if (std::cin.fail())
+      {
+        std::cin.ignore(1000000, '\n');
+        std::cin.clear();
+        std::cout << "Please enter a valid choice ";
+      }
+      if (gameChoice > 2 || gameChoice < 1)
+      {
+        std::cout << "Please enter a valid choice ";
+      }
+      else
       {
         break;
       }
-
-      counter % 2 ? symbol = 'O' : symbol = 'X';
-      counter % 2 ? player = 2 : player = 1;
-
-      std::cout << "\033[2J\033[1;1H" << (intro ? "Welcome to TTT!\n" : "") << console.displayBoard();
-      intro = false;
-
-      std::cout << "Player " << player << ", where would you like to move? (1-9) ";
-      int move{validator.getInput()};
-      board->takeTurn(move, symbol);
-
-      counter++;
     }
-    if (counter == 9)
+
+    if (gameChoice == 1)
     {
-      std::cout << "It's a draw!\n Would you like to play again? (Y to continue, any other key to quit) ";
-      replay = validator.getReplay();
-      continue;
+      basePlayer playerOne(board, 'X');
+      basePlayer playerTwo(board, 'O');
+
+      Game TTT(&console, board, &gameState, &playerOne, &playerTwo, &tracker);
+      TTT.playTTT();
+    }
+    else if (gameChoice == 2)
+    {
+      Game battle(&console, board, &gameState, &tracker);
+      battle.setPlayerOne(battle.selectClass());
+      battle.setPlayerTwo(battle.selectClass());
+
+      battle.playBattle();
     }
 
-
-      std::cout << console.displayBoard();
-      std::cout << "The game is over, " << gameState.getWinner() << " won!\n";
-
-      std::cout << "Would you like to play again? (Y to continue, any other key to quit) ";
-      replay = validator.getReplay();
+    std::cout << "Would you like to play again? (Y to play again, any other character to quit) ";
+    replay = getReplay();
   }
+  std::cout << "Check the game stats.txt file to see game results!" << std::endl;
+  tracker.writeStats();
+}
 
-  std::cout << "Thank you for playing! Come again!" << std::endl;
+bool getReplay()
+{
+  fflush(stdin);
+  char playAgain{'n'};
+
+  while (true)
+  {
+    std::cin >> playAgain;
+
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore(1000000000000000000, '\n');
+      std::cout << "Invalid input, please enter either \'Y\' or another character\n";
+    }
+    else if (tolower(playAgain) == 'y')
+    {
+      return true;
+      std::cout << "Invalid input, please enter either \'Y\' or another character.\n";
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return false;
 }
