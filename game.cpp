@@ -2,6 +2,7 @@
 #include "swarm.hpp"
 #include "pyromancer.hpp"
 #include "base_player.hpp"
+#include "stat_tracker.hpp"
 #include <iostream>
 #include <string>
 
@@ -18,12 +19,25 @@ void Game::playTTT()
     {
       std::cout << console->displayBoard() << std::endl;
       std::cout << gameState->getWinner() << " has won!" << std::endl;
+
+      if (gameState->getWinner() == 'X')
+      {
+        std::cout << "testx" << std::endl;
+        tracker->logXWin();
+      }
+      else if (gameState->getWinner() == 'O')
+      {
+        std::cout << "testo" << std::endl;
+        tracker->logOWin();
+      }
+
       break;
     }
     if (gameState->checkStatus() == TIE)
     {
       std::cout << console->displayBoard() << std::endl;
       std::cout << "Game ended in a tie!" << std::endl;
+      tracker->logTie();
       break;
     }
 
@@ -34,6 +48,16 @@ void Game::playTTT()
     if (gameState->checkStatus() == WON)
     {
       std::cout << gameState->getWinner() << " has won!" << std::endl;
+      if (gameState->getWinner() == 'X')
+      {
+        std::cout << "testx" << std::endl;
+        tracker->logXWin();
+      }
+      else if (gameState->getWinner() == 'O')
+      {
+        std::cout << "testo" << std::endl;
+        tracker->logOWin();
+      }
       break;
     }
     std::cout << console->displayBoard() << std::endl;
@@ -43,7 +67,7 @@ void Game::playTTT()
 void Game::playBattle()
 {
   bool gameOver{false};
-  std::cout << console->displayBoard() << std::endl;
+  std::cout << console->displayBoard();
 
   while (!gameOver)
   {
@@ -53,12 +77,21 @@ void Game::playBattle()
     {
       std::cout << console->displayBoard() << std::endl;
       std::cout << gameState->getWinner() << " has won!" << std::endl;
+      if (gameState->getWinner() == 'X')
+      {
+        tracker->logXWin();
+      }
+      else if (gameState->getWinner() == 'O')
+      {
+        tracker->logOWin();
+      }
       break;
     }
     if (gameState->checkStatus(playerOne) == TIE)
     {
       std::cout << console->displayBoard() << std::endl;
       std::cout << "Game ended in a tie!" << std::endl;
+      tracker->logTie();
       break;
     }
 
@@ -69,12 +102,21 @@ void Game::playBattle()
     if (gameState->checkStatus(playerTwo) == WON)
     {
       std::cout << gameState->getWinner() << " has won!" << std::endl;
+      if (gameState->getWinner() == 'X')
+      {
+        tracker->logXWin();
+      }
+      else if (gameState->getWinner() == 'O')
+      {
+        tracker->logOWin();
+      }
       break;
     }
     if (gameState->checkStatus(playerTwo) == TIE)
     {
       std::cout << console->displayBoard() << std::endl;
       std::cout << "Game ended in a tie!" << std::endl;
+      tracker->logTie();
       break;
     }
     std::cout << console->displayBoard() << std::endl;
@@ -157,18 +199,20 @@ bool Game::getReplay()
   return false;
 }
 
-Game::Game(Console *console, Board *board, GameState *gameState)
+Game::Game(Console *console, Board *board, GameState *gameState, StatTracker *tracker)
 {
   this->console = console;
   this->board = board;
   this-> gameState = gameState;
+  this->tracker = tracker;
 }
 
-Game::Game(Console *console, Board *board, GameState *gameState, Player *playerOne, Player *playerTwo)
+Game::Game(Console *console, Board *board, GameState *gameState, Player *playerOne, Player *playerTwo, StatTracker *tracker)
 {
   this->console = console;
   this->board = board;
   this-> gameState = gameState;
   this->playerOne = playerOne;
   this->playerTwo = playerTwo;
+  this->tracker = tracker;
 }
