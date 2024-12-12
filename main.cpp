@@ -78,11 +78,12 @@ bool getReplay()
   while (true)
   {
     std::cin >> playAgain;
+    std::cin.ignore(1000000000000000000, '\n');
 
     if (std::cin.fail())
     {
-      std::cin.clear();
       std::cin.ignore(1000000000000000000, '\n');
+      std::cin.clear();
       std::cout << "Invalid input, please enter either \'Y\' or another character\n";
     }
     else if (tolower(playAgain) == 'y')

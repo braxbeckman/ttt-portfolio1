@@ -22,12 +22,10 @@ void Game::playTTT()
 
       if (gameState->getWinner() == 'X')
       {
-        std::cout << "testx" << std::endl;
         tracker->logXWin();
       }
       else if (gameState->getWinner() == 'O')
       {
-        std::cout << "testo" << std::endl;
         tracker->logOWin();
       }
 
@@ -50,12 +48,10 @@ void Game::playTTT()
       std::cout << gameState->getWinner() << " has won!" << std::endl;
       if (gameState->getWinner() == 'X')
       {
-        std::cout << "testx" << std::endl;
         tracker->logXWin();
       }
       else if (gameState->getWinner() == 'O')
       {
-        std::cout << "testo" << std::endl;
         tracker->logOWin();
       }
       break;
